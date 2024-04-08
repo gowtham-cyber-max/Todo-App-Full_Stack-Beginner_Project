@@ -1,4 +1,4 @@
-import { HashRouter,Route,Routes } from 'react-router-dom';
+import {Route,Routes } from 'react-router-dom';
 import './App.css';
 import Todo from './Todo/Todo';
 import Login from './Todo/Login';
@@ -7,15 +7,17 @@ import Login from './Todo/Login';
 
 function App() {
   return (
-    <div className="App">
+    <>
+      <Routes>
       
-      
+        
         <Route path='/' element={<Login/>}/>
 
         <Route path='/Todo' element={<Todo/>}/>
     
+      </Routes>
      
-    </div>
+    </>
   );
 }
 
