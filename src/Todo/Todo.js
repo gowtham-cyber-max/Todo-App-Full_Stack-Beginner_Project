@@ -1,7 +1,9 @@
 import React, { useState, useRef,useEffect } from "react";
 import Button from "@mui/material/Button";
-import { collection,addDoc, getDocs } from "firebase/firestore";
+import { collection,addDoc, getDocs, getDoc,updateDoc,doc } from "firebase/firestore";
 import { db } from "./Backend/firebase";
+import { auth } from "./Backend/firebase";
+import { ColorLens } from "@mui/icons-material";
 
 function Todo() {
 
@@ -10,12 +12,24 @@ function Todo() {
   const [itemList, updateitem] = useState([]);
  
 
+
   useEffect(() => {
-    const data=getDocs(collection_Ref).then((data)=>{
-        console.log(data.querySnapshot.data());
-    });
-    
-  }); 
+    const fetch = async () => {
+      console.log("fetched");
+      try {
+        const data = await getDocs(collection_Ref);
+        const filterdata = data.docs.map((item) => ({
+          ...item.data(),
+          id: item.id,
+        }));
+        updateitem(filterdata);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+  
+    fetch(); // Call the fetch function to execute it
+  }, []);
 
 
   const handleCreate=async(event)=>{
@@ -24,7 +38,9 @@ function Todo() {
     if (item.current.value.length > 2){
       await addDoc(collection_Ref,{
         name : item.current.value,
-        completed:false
+        completed:false,
+        user_id : auth.currentUser.uid
+
       })
       item.current.value="";
     }
@@ -33,12 +49,14 @@ function Todo() {
       console.log(e);
     }
   }
-  const handleclick = (id) => {
-    const updatedTasks = itemList.map((task) => {
-      if (id === task.id) return { ...task, completed: !task.completed };
-      else return task;
+  const handleclick = async(id,state) => {
+    const doc_ref=doc(db,"Tasks",id);
+    const data = getDoc(doc_ref)
+    console.log(data)
+    updateDoc(doc_ref,{
+      completed:!state
     });
-    updateitem(updatedTasks);
+    //fetch();
   };
   const HandleDel = (idval) => {
     updateitem((oldValues) => {
@@ -65,19 +83,19 @@ function Todo() {
         >
           {itemList.map((item, index) => {
             const styling = item.completed
-              ? { "text-decoration": "line-through" }
+              ? { "textDecoration": "line-through" }
               : {};
             return (
-              <tr>
-                {" "}
+              <tbody>
+              <tr key={index}>
+              
                 <td>{index + 1}</td>
-                <td style={styling} onClick={() => handleclick(item.id)}>
-                  {" "}
-                  {item.name}{" "}
+                <td style={styling} onClick={() => handleclick(item.id,item.completed)}>
+                  {item.name}
                 </td>
                 <td>
                   {" "}
-                  <input type="checkbox" checked={item.completed } onClick={() => handleclick(item.id)}></input>{" "}
+                  <input type="checkbox" checked={item.completed } onChange={() => handleclick(item.id,item.completed)} onClick={() => handleclick(item.id,item.completed)}></input>{" "}
                 </td>
                 <td>
                   <Button
@@ -91,8 +109,10 @@ function Todo() {
                   </Button>
                 </td>
               </tr>
+              </tbody>
             );
           })}
+
         </table>
       </form>
     </div>
