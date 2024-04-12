@@ -56,7 +56,6 @@ function Todo() {
     updateDoc(doc_ref,{
       completed:!state
     });
-    //fetch();
   };
   const HandleDel = (idval) => {
     updateitem((oldValues) => {
