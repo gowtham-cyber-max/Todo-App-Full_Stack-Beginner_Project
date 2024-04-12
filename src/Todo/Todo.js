@@ -1,23 +1,38 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import Button from "@mui/material/Button";
+import { collection,addDoc, getDocs } from "firebase/firestore";
+import { db } from "./Backend/firebase";
 
 function Todo() {
+
+  const collection_Ref = collection(db,"Tasks");
   const item = useRef(null);
   const [itemList, updateitem] = useState([]);
-  const handle = (event) => {
-    event.preventDefault();
-    if (item.current.value.length > 2) {
-      updateitem([
-        ...itemList,
-        {
-          id: itemList.length + 1,
-          name: item.current.value,
-          completed: false,
-        },
-      ]);
+ 
+
+  useEffect(() => {
+    const data=getDocs(collection_Ref).then((data)=>{
+        console.log(data.querySnapshot.data());
+    });
+    
+  }); 
+
+
+  const handleCreate=async(event)=>{
+    try{
+      event.preventDefault();
+    if (item.current.value.length > 2){
+      await addDoc(collection_Ref,{
+        name : item.current.value,
+        completed:false
+      })
+      item.current.value="";
     }
-    item.current.value = "";
-  };
+  }
+  catch(e){
+      console.log(e);
+    }
+  }
   const handleclick = (id) => {
     const updatedTasks = itemList.map((task) => {
       if (id === task.id) return { ...task, completed: !task.completed };
@@ -32,7 +47,7 @@ function Todo() {
   };
   return (
     <div>
-      <form onSubmit={handle}>
+      <form onSubmit={handleCreate}>
         <input id="inp" ref={item} type="text"></input>
         <Button size="small" type="submit" variant="contained" color="success">
           Add

@@ -14,6 +14,10 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import GoogleButton from 'react-google-button'
+import { signInWithPopup } from "firebase/auth";
+import { auth, gauth } from "./Backend/firebase";
+
 
 const defaultTheme = createTheme();
 
@@ -22,10 +26,23 @@ export default function Login() {
   const [hash, setHash] = useState("");
   const [visi, setVisi] = useState(false);
   const navi = useNavigate();
-  const handleSubmit = (event) => {
-    event.preventDefault();
-          navi("/Todo");
-};
+      const handleSubmit = (event) => {
+        event.preventDefault();
+              navi("/Todo");
+      };
+      
+
+      const handleGoogle = async () => {
+       try{
+        await signInWithPopup(auth,gauth);
+        if(auth.currentUser){
+        navi("/Todo");}
+       }
+       catch(error){
+        console.error(error);
+       }
+        
+      }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -98,6 +115,14 @@ export default function Login() {
             >
               Sign In
             </Button>
+            <p>Or</p>
+            <GoogleButton
+              onClick={handleGoogle}
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 5 }}
+
+            />
             <Grid container>
               <Grid item xs></Grid>
               <Grid item>
