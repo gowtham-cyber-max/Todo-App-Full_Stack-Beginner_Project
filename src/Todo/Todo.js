@@ -1,9 +1,9 @@
 import React, { useState, useRef,useEffect } from "react";
 import Button from "@mui/material/Button";
-import { collection,addDoc, getDocs, getDoc,updateDoc,doc } from "firebase/firestore";
+import { collection,addDoc, getDocs, getDoc,updateDoc,doc,deleteDoc } from "firebase/firestore";
 import { db } from "./Backend/firebase";
 import { auth } from "./Backend/firebase";
-import { ColorLens } from "@mui/icons-material";
+
 
 function Todo() {
 
@@ -13,21 +13,20 @@ function Todo() {
  
 
 
+  const fetch = async () => {
+    try {
+      const data = await getDocs(collection_Ref);
+      const filterdata = data.docs.map((item) => ({
+        ...item.data(),
+        id: item.id,
+      }));
+      updateitem(filterdata);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
-    const fetch = async () => {
-      console.log("fetched");
-      try {
-        const data = await getDocs(collection_Ref);
-        const filterdata = data.docs.map((item) => ({
-          ...item.data(),
-          id: item.id,
-        }));
-        updateitem(filterdata);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-  
     fetch(); // Call the fetch function to execute it
   }, []);
 
@@ -43,6 +42,7 @@ function Todo() {
 
       })
       item.current.value="";
+      fetch();
     }
   }
   catch(e){
@@ -56,11 +56,12 @@ function Todo() {
     updateDoc(doc_ref,{
       completed:!state
     });
+    fetch();
   };
-  const HandleDel = (idval) => {
-    updateitem((oldValues) => {
-      return oldValues.filter((itemList) => itemList.id !== idval);
-    });
+  const HandleDel = async(id) => {
+    const del_ref=doc(db,"Tasks",id);
+    await deleteDoc(del_ref);
+    fetch();
   };
   return (
     <div>
