@@ -1,8 +1,9 @@
 import React, { useState, useRef,useEffect } from "react";
 import Button from "@mui/material/Button";
-import { collection,addDoc, getDocs, getDoc,updateDoc,doc,deleteDoc } from "firebase/firestore";
+import { collection,addDoc, getDoc,updateDoc,doc,deleteDoc, query, onSnapshot, serverTimestamp } from "firebase/firestore";
 import { db } from "./Backend/firebase";
 import { auth } from "./Backend/firebase";
+import { where } from "firebase/firestore";
 
 
 function Todo() {
@@ -15,20 +16,27 @@ function Todo() {
 
   const fetch = async () => {
     try {
-      const data = await getDocs(collection_Ref);
-      const filterdata = data.docs.map((item) => ({
-        ...item.data(),
-        id: item.id,
-      }));
-      updateitem(filterdata);
+      
+      const q=query(collection_Ref,where('user_id','==',auth.currentUser.uid));
+       onSnapshot(q,(querySnapshot)=>{
+
+        const filterdata = querySnapshot.docs.map((item) => ({
+          ...item.data(),
+          id: item.id,
+        }));
+        filterdata.sort((a,b)=>a.createdAt - b.createdAt);
+        updateitem(filterdata);
+      })
+
+      
     } catch (e) {
       console.log(e);
     }
   };
-
+  
   useEffect(() => {
     fetch(); // Call the fetch function to execute it
-  }, []);
+  });
 
 
   const handleCreate=async(event)=>{
@@ -38,8 +46,9 @@ function Todo() {
       await addDoc(collection_Ref,{
         name : item.current.value,
         completed:false,
-        user_id : auth.currentUser.uid
-
+        user_id : auth.currentUser.uid,
+        createdAt : serverTimestamp()
+        
       })
       item.current.value="";
       fetch();
@@ -65,6 +74,7 @@ function Todo() {
   };
   return (
     <div>
+    {console.log(auth.currentUser)}
       <form onSubmit={handleCreate}>
         <input id="inp" ref={item} type="text"></input>
         <Button size="small" type="submit" variant="contained" color="success">
@@ -75,7 +85,6 @@ function Todo() {
           style={{
             width: "50%",
             border: "1px solid #ddd",
-            border: "1",
             margin: "20px",
             textAlign: "center",
             padding: "8px",
@@ -89,12 +98,11 @@ function Todo() {
               <tbody>
               <tr key={index}>
               
-                <td>{index + 1}</td>
+                <td> {index + 1}</td>
                 <td style={styling} onClick={() => handleclick(item.id,item.completed)}>
                   {item.name}
                 </td>
                 <td>
-                  {" "}
                   <input type="checkbox" checked={item.completed } onChange={() => handleclick(item.id,item.completed)} onClick={() => handleclick(item.id,item.completed)}></input>{" "}
                 </td>
                 <td>
