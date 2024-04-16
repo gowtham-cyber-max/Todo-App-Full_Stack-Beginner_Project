@@ -67,7 +67,6 @@ function Todo() {
   const handleclick = async(id,state) => {
     const doc_ref=doc(db,"Tasks",id);
     const data = getDoc(doc_ref)
-    console.log(data)
     updateDoc(doc_ref,{
       completed:!state
     });
@@ -80,7 +79,6 @@ function Todo() {
   };
   return (
     <div>
-    {console.log(auth.currentUser)}
       <form onSubmit={handleCreate}>
         <input id="inp" ref={item} type="text"></input>
         <Button size="small" type="submit" variant="contained" color="success">
