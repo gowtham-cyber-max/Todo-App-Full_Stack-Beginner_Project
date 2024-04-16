@@ -21,7 +21,7 @@ import { auth, gauth } from "./Backend/firebase";
 
 const defaultTheme = createTheme();
 
-export default function Login() {
+ function Login() {
   const [username, setUsername] = useState("");
   const [hash, setHash] = useState("");
   const [visi, setVisi] = useState(false);
@@ -43,17 +43,19 @@ export default function Login() {
        try{
         await signInWithPopup(auth,gauth);
         if(auth.currentUser){
-        navi("/Todo");}
+          navi("/Todo");
+          console.log("hi");
+        }
        }
        catch(error){
         console.error(error);
-       }
+      }
         
       }
       
-
-  return (
-    <ThemeProvider theme={defaultTheme}>
+      
+      return (
+        <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -145,3 +147,4 @@ export default function Login() {
     </ThemeProvider>
   );
 }
+export default Login;

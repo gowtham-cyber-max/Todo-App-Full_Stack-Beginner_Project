@@ -2,9 +2,9 @@ import React, { useState, useRef,useEffect } from "react";
 import Button from "@mui/material/Button";
 import { collection,addDoc, getDoc,updateDoc,doc,deleteDoc, query, onSnapshot, serverTimestamp } from "firebase/firestore";
 import { db } from "./Backend/firebase";
-import { auth } from "./Backend/firebase";
+import  {auth}  from "./Backend/firebase";
 import { where } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import {onAuthStateChanged } from "firebase/auth";
 
 
 function Todo() {
@@ -12,14 +12,19 @@ function Todo() {
   const collection_Ref = collection(db,"Tasks");
   const item = useRef(null);
   const [itemList, updateitem] = useState([]);
- 
-
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+          fetch();
+    } else {
+      console.log("logOut");
+    }
+  });
 
   const fetch = async () => {
     try {
       
       const q=query(collection_Ref,where('user_id','==',auth.currentUser.uid));
-       onSnapshot(q,(querySnapshot)=>{
+      onSnapshot(q,(querySnapshot)=>{
 
         const filterdata = querySnapshot.docs.map((item) => ({
           ...item.data(),
@@ -36,12 +41,10 @@ function Todo() {
   };
   
   useEffect(() => {
-    getAuth();
-    console.log(auth.currentUser.email);
     fetch();
   });
-
-
+  
+  
   const handleCreate=async(event)=>{
     try{
       event.preventDefault();
@@ -98,7 +101,7 @@ function Todo() {
               ? { "textDecoration": "line-through" }
               : {};
             return (
-              <tbody>
+              <tbody key={index}>
               <tr key={index}>
               
                 <td> {index + 1}</td>
