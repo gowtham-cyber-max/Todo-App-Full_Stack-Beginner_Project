@@ -5,8 +5,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -14,42 +12,29 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import GoogleButton from 'react-google-button'
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, gauth } from "./Backend/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth} from "./Backend/firebase";
 
 
 const defaultTheme = createTheme();
 
-export default function Login() {
+export default function SignUp() {
   const [username, setUsername] = useState("");
   const [hash, setHash] = useState("");
   const [visi, setVisi] = useState(false);
   const navi = useNavigate();
+
       const handleSubmit = async(event) => {
         event.preventDefault();
         try{
-              await signInWithEmailAndPassword(auth,username,hash);
-              if(auth.currentUser){
-                navi("/Todo");
+              await createUserWithEmailAndPassword(auth,username,hash);
+                navi("/");
                 console.log("hi");
-              }
         }
         catch(e){
           console.log(e);
         }
       };
-      const handleGoogle = async () => {
-       try{
-        await signInWithPopup(auth,gauth);
-        if(auth.currentUser){
-        navi("/Todo");}
-       }
-       catch(error){
-        console.error(error);
-       }
-        
-      }
       
 
   return (
@@ -121,24 +106,8 @@ export default function Login() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Register
             </Button>
-            <p>Or</p>
-            <GoogleButton
-              onClick={handleGoogle}
-              fullwidth={true}
-              variant="contained"
-              sx={{ mt: 3, mb: 5 }}
-
-            />
-            <Grid container>
-              <Grid item xs></Grid>
-              <Grid item>
-                <Link href="#/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>

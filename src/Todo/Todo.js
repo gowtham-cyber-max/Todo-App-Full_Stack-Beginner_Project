@@ -4,6 +4,7 @@ import { collection,addDoc, getDoc,updateDoc,doc,deleteDoc, query, onSnapshot, s
 import { db } from "./Backend/firebase";
 import { auth } from "./Backend/firebase";
 import { where } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 
 function Todo() {
@@ -35,7 +36,9 @@ function Todo() {
   };
   
   useEffect(() => {
-    fetch(); // Call the fetch function to execute it
+    getAuth();
+    console.log(auth.currentUser.email);
+    fetch();
   });
 
 
