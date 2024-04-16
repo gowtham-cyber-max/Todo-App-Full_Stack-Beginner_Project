@@ -1,0 +1,20 @@
+body{
+    background-image: url(" https://th.bing.com/th/id/OIG4.i1YVC8yLPpPTFV.VJP3P?w=1024&h=1024&rs=1&pid=ImgDetMain");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+table{
+    background-color: azure;
+    text-align: center;
+    
+}
+input{
+    text-align: end;
+}
+.input-field{
+    margin-left: 45%;
+}
+.table-css{
+    margin-left: 40%;
+    width: 46%;
+}

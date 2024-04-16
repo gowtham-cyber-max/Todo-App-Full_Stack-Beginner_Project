@@ -1,11 +1,11 @@
 import React, { useState, useRef,useEffect } from "react";
 import Button from "@mui/material/Button";
-import { collection,addDoc, getDoc,updateDoc,doc,deleteDoc, query, onSnapshot, serverTimestamp } from "firebase/firestore";
+import { collection,addDoc,updateDoc,doc,deleteDoc, query, onSnapshot, serverTimestamp } from "firebase/firestore";
 import { db } from "./Backend/firebase";
 import  {auth}  from "./Backend/firebase";
 import { where } from "firebase/firestore";
 import {onAuthStateChanged } from "firebase/auth";
-
+import "./Todo.css";
 
 function Todo() {
 
@@ -66,7 +66,6 @@ function Todo() {
   }
   const handleclick = async(id,state) => {
     const doc_ref=doc(db,"Tasks",id);
-    const data = getDoc(doc_ref)
     updateDoc(doc_ref,{
       completed:!state
     });
@@ -80,10 +79,14 @@ function Todo() {
   return (
     <div>
       <form onSubmit={handleCreate}>
+      <div className="input-field">
+
         <input id="inp" ref={item} type="text"></input>
         <Button size="small" type="submit" variant="contained" color="success">
           Add
         </Button>
+      </div>
+<div className="table-css">
 
         <table
           style={{
@@ -126,6 +129,7 @@ function Todo() {
           })}
 
         </table>
+</div>
       </form>
     </div>
   );
