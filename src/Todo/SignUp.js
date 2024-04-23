@@ -52,6 +52,7 @@ export default function SignUp() {
             flexDirection: "column",
             alignItems: "center",
           }}
+          className="sign"
         >
           <Avatar sx={{ m: 1, bgcolor: "green" }}>
             <LockOutlinedIcon />
