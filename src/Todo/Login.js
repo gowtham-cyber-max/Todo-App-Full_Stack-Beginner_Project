@@ -41,7 +41,7 @@ const defaultTheme = createTheme();
                 alert("Please Type Your Email");
               }
               if(error.code ==='auth/invalid-credential'){
-                alert("Password or Username is wrong , Please Sign Up");
+                alert(" Invalid Username or  Password  , if you Dont have a account Please Sign Up");
               }
               if(error.code ==='auth/missing-password'){
                 alert("Please Type Your Password");
