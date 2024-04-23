@@ -34,9 +34,19 @@ const defaultTheme = createTheme();
                 navi("/Todo");
                 console.log("hi");
               }
-        }
-        catch(e){
-          console.log(e);
+              else{
+                console.log("else");
+              }
+            }
+            catch(e){
+              if(e.code ==='auth/invalid-credential'){
+                alert("Password or Username is wrong , Please Sign Up");
+              }
+              else if(e.code ==='auth/missing-password'){
+                alert("Please Type Your Password");
+              }
+             
+             
         }
       };
       const handleGoogle = async () => {
@@ -59,6 +69,7 @@ const defaultTheme = createTheme();
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
+          className="sign"
           sx={{
             marginTop: 8,
             display: "flex",
@@ -126,6 +137,7 @@ const defaultTheme = createTheme();
               Sign In
             </Button>
             <p>Or</p>
+            <div>
             <GoogleButton
               onClick={handleGoogle}
               fullwidth={true}
@@ -133,6 +145,7 @@ const defaultTheme = createTheme();
               sx={{ mt: 3, mb: 5 }}
 
             />
+           </div>
             <Grid container>
               <Grid item xs></Grid>
               <Grid item>
