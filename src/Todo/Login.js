@@ -17,8 +17,6 @@ import { useNavigate } from "react-router-dom";
 import GoogleButton from 'react-google-button'
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, gauth } from "./Backend/firebase";
-
-
 const defaultTheme = createTheme();
 
  function Login() {
@@ -38,16 +36,20 @@ const defaultTheme = createTheme();
                 console.log("else");
               }
             }
-            catch(e){
-              if(e.code ==='auth/invalid-credential'){
+            catch (error) {
+              if(error.code==='auth/invalid-email'){
+                alert("Please Type Your Email");
+              }
+              if(error.code ==='auth/invalid-credential'){
                 alert("Password or Username is wrong , Please Sign Up");
               }
-              else if(e.code ==='auth/missing-password'){
+              if(error.code ==='auth/missing-password'){
                 alert("Please Type Your Password");
               }
-             
-             
-        }
+              
+                console.log(error.message);
+            }
+           
       };
       const handleGoogle = async () => {
        try{

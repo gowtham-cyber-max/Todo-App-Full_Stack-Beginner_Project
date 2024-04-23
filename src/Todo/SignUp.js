@@ -33,6 +33,10 @@ export default function SignUp() {
         }
         catch(e){
           console.log(e);
+          if(e.code==='auth/email-already-in-use')
+          alert("Email is Exist");
+          setHash("");
+          setUsername("");
         }
       };
       
