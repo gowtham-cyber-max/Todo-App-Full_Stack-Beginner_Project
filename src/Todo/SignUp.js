@@ -32,17 +32,25 @@ export default function SignUp() {
                 console.log("hi");
         }
         catch(e){
-          console.log(e);
+          console.log(e.code);
           if(e.code==='auth/email-already-in-use')
-          alert("Email is Exist");
+          {alert("Email is Exist");
           setHash("");
-          setUsername("");
+          setUsername("");}
+          else if(e.code==='auth/invalid-email')
+          {alert("Invalid Email");
+          setHash("");
+          setUsername("");}
+          if(e.code ==='auth/missing-password'){
+                alert("Please Type Your Password");
+              }
+              
         }
       };
       
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={defaultTheme} className="body">
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

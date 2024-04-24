@@ -49,3 +49,27 @@ tbody{
   padding: 16px;
   border-radius: 4px;
 }
+tr:hover{
+  background-color:rgb(7, 247, 167);
+  color:whitesmoke;
+}
+.table-box{
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background-color: azure;
+  backdrop-filter: blur(15px);
+  box-shadow: black 2px 8px 20px;
+  padding: 16px;
+  border-radius: 4px;
+  background:transparent;
+}
+.body{
+  background-image: url(" https://th.bing.com/th/id/OIG4.i1YVC8yLPpPTFV.VJP3P?w=1024&h=1024&rs=1&pid=ImgDetMain");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.todo{
+  
+}

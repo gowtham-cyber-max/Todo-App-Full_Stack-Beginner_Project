@@ -5,7 +5,7 @@ import { db } from "./Backend/firebase";
 import  {auth}  from "./Backend/firebase";
 import { where } from "firebase/firestore";
 import {onAuthStateChanged } from "firebase/auth";
-import "./Todo.css";
+
 
 function Todo() {
 
@@ -96,6 +96,7 @@ function Todo() {
             textAlign: "center",
             padding: "8px",
           }}
+          className="table-box"
         >
           {itemList.map((item, index) => {
             const styling = item.completed

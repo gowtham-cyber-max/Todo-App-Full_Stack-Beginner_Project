@@ -67,7 +67,7 @@ const defaultTheme = createTheme();
       
       
       return (
-        <ThemeProvider theme={defaultTheme}>
+        <ThemeProvider theme={defaultTheme} className="body">
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
