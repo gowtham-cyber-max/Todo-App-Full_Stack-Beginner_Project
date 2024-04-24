@@ -77,43 +77,30 @@ function Todo() {
     fetch();
   };
   return (
-    <div>
-      <form onSubmit={handleCreate}>
+    <div className="todo">
       <div className="input-field">
+      <form onSubmit={handleCreate}>
 
         <input id="inp" ref={item} type="text"></input>
         <Button size="small" type="submit" variant="contained" color="success">
           Add
         </Button>
+      </form>
       </div>
-<div className="table-css">
 
-        <table
-          style={{
-            width: "50%",
-            border: "1px solid #ddd",
-            margin: "20px",
-            textAlign: "center",
-            padding: "8px",
-          }}
-          className="table-box"
-        >
+        <div className="table-box">
+
           {itemList.map((item, index) => {
             const styling = item.completed
               ? { "textDecoration": "line-through" }
               : {};
             return (
-              <tbody key={index}>
-              <tr key={index}>
-              
-                <td> {index + 1}</td>
-                <td style={styling} onClick={() => handleclick(item.id,item.completed)}>
+                <div style={styling} className="list" onClick={() => handleclick(item.id,item.completed)}>
+                  <p>
                   {item.name}
-                </td>
-                <td>
-                  <input type="checkbox" checked={item.completed } onChange={() => handleclick(item.id,item.completed)} onClick={() => handleclick(item.id,item.completed)}></input>{" "}
-                </td>
-                <td>
+                  </p>
+                  <input type="checkbox" checked={item.completed } onChange={() => handleclick(item.id,item.completed)} onClick={() => handleclick(item.id,item.completed)}></input>
+            
                   <Button
                     size="medium"
                     type="submit"
@@ -123,16 +110,12 @@ function Todo() {
                   >
                     Delete
                   </Button>
-                </td>
-              </tr>
-              </tbody>
+                </div>
             );
           })}
 
-        </table>
-</div>
-      </form>
-    </div>
+              </div>
+              </div>
   );
 }
 

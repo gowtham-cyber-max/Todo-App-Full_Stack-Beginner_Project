@@ -67,7 +67,9 @@ const defaultTheme = createTheme();
       
       
       return (
-        <ThemeProvider theme={defaultTheme} className="body">
+        <div className="body">
+
+        <ThemeProvider theme={defaultTheme} >
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -160,6 +162,7 @@ const defaultTheme = createTheme();
         </Box>
       </Container>
     </ThemeProvider>
+        </div>
   );
 }
 export default Login;
