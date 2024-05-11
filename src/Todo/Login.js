@@ -27,6 +27,10 @@ const defaultTheme = createTheme();
       const handleSubmit = async(event) => {
         event.preventDefault();
         try{
+              if(username==="" || hash===""){
+                alert("Type Your mail and password");
+                return;
+              }
               await signInWithEmailAndPassword(auth,username,hash);
               if(auth.currentUser){
                 navi("/Todo");
