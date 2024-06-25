@@ -5,8 +5,9 @@ import { db } from "./Backend/firebase";
 import  {auth}  from "./Backend/firebase";
 import { where } from "firebase/firestore";
 import {onAuthStateChanged } from "firebase/auth";
-
-
+import "./todo.css";
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 function Todo() {
 
   const collection_Ref = collection(db,"Tasks");
@@ -77,8 +78,12 @@ function Todo() {
     fetch();
   };
   return (
-    <div className="todo">
+    <div className="body-todo">
+
+    
+    <div className="todobox">
       <div className="input-field">
+      <h1 className="head">Todo List</h1>
       <form onSubmit={handleCreate}>
 
         <input id="inp" ref={item} type="text"></input>
@@ -100,20 +105,17 @@ function Todo() {
                   {item.name}
                   </p>
                   <input type="checkbox" checked={item.completed } onChange={() => handleclick(item.id,item.completed)} onClick={() => handleclick(item.id,item.completed)}></input>
-            
-                  <Button
-                    size="medium"
-                    type="submit"
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => HandleDel(item.id)}
+                  <IconButton aria-label="delete"
+                   onClick={() => HandleDel(item.id)}
                   >
-                    Delete
-                  </Button>
+                      <DeleteIcon />
+                  </IconButton>
+                 
                 </div>
             );
           })}
 
+              </div>
               </div>
               </div>
   );
