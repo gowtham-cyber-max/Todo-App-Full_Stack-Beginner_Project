@@ -6,15 +6,17 @@ import SignUp from './Todo/SignUp';
 
 
 
+
+
 function App() {
   return (
     <>
       <Routes>
       
         
-        <Route path='/Todo' element={<Login/>}/>
+        <Route path='/' element={<Login/>}/>
 
-        <Route path='/' element={<Todo/>}/>
+        <Route path='/Todo' element={<Todo/>}/>
 
         <Route path='/SignUp' element={<SignUp/>}/>
     

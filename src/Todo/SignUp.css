@@ -1,0 +1,28 @@
+.sign-up-container{
+    background-color: rgb(177, 174, 170);
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+    height: 50vh;
+    width: 50vw;
+    justify-content: space-around;
+    border-radius: 5vh;
+    box-shadow: 0px 16px 30px 4px #111;
+
+
+   
+}
+.sign-up-body{
+    height: 100vh;
+    width: 100vw;
+   background-color: rgb(213, 207, 207);
+   display: flex;
+   justify-content: center; 
+   align-items: center;
+
+
+}
+input{
+    border-radius: 4px;
+}
