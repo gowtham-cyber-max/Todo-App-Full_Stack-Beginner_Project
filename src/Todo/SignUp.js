@@ -41,6 +41,7 @@ export default function SignUp() {
   return (
    <div className="sign-up-body">
    <div className="sign-up-container">
+   <h1>Sign Up</h1>
 
    <div>
 
@@ -49,6 +50,7 @@ export default function SignUp() {
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
+              placeholder="email"
           />
    </div>       
    <div>
@@ -58,6 +60,7 @@ export default function SignUp() {
               onChange={(e) => {
                 setHash(e.target.value);
               }}
+               placeholder="password"
             />
    </div>       
    <div>
